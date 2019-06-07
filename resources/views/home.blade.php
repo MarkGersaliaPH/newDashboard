@@ -19,18 +19,24 @@
 					Sales Report
 					<div class="card-header-actions"> 
 						<select   id="year">
-							<option>{{$now->year}}</option>
-							<option>2019</option>
-							<option>2018</option>
-							<option>2017</option>
-							<option>2016</option>
+						@for($i = $now->year;$i >= 2010; $i --)
+							<option {{$now->year == $i ? 'selected default hidden' : ''}}>{{$i}}</option>
+							{{-- <option>{{}}</option> --}}
+						@endfor
 						</select>
+
 						<select id="month">
-							<option default hidden value="{{$now->month}}">{{$now->format('F')}}</option>
-							<option value="1">January</option>
-							<option value="2">February</option>
-							<option value="3">March</option>
-							<option value="6">June</option>
+							@php
+								$month = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+							@endphp
+							@foreach($month as $key => $month)
+
+								@if($now->format('F') == $month)
+								<option selected default hidden value="{{$key}}">{{$month}}</option>
+								@else
+								<option value="{{$key + 1}}">{{$month}}</option>								
+								@endif
+							@endforeach 
 						</select> 
 						<button  id="filter">Filter</button> 
 					</div>
